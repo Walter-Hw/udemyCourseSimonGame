@@ -20,6 +20,7 @@ $('.btn').on('click', (e) => {
 
   playSound(userChosenColor);
   animatePress(userChosenColor);
+  checkAnswer(userClickedPattern.length - 1);
 
 })
 
@@ -52,5 +53,28 @@ let animatePress = (currentColor) => {
   setTimeout(() => {
     $(`#${currentColor}`).removeClass('pressed');
   }, 100);
+
+};
+
+// Helper function with tracking the score of game
+let checkAnswer = (currentLevel) => {
+
+  if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+
+    if (gamePattern.length === userClickedPattern.length) {
+      setTimeout(() => {
+        nextSequence()
+      }, 1000);
+    }
+  } else {
+
+    let audio = new Audio('sounds/wrong.mp3');
+    audio.play();
+    setTimeout(() => {
+      $('body').addClass('game-over');
+    }, 200);
+    $('h1').text('Game Over, Press Any Key to Restart');
+
+  }
 
 };
